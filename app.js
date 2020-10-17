@@ -9,9 +9,6 @@ const cookieParser = require('cookie-parser');
 
 const auth = require('./middlewares/auth');
 
-const {
-  PORT = 3000,
-} = process.env;
 const app = express();
 
 app.use(bodyParser.json());
@@ -43,19 +40,5 @@ app.use('/', auth, users);
 app.use('/', auth, cards);
 
 app.use('/', otherReq);
-
-app.listen(PORT, () => {
-  console.log(`
-  ======================
-  Server has been started.
-  ======================
-  Current port: [ ${PORT} ].
-  ======================
-  Current time [ ${new Date().getHours()}:${new Date().getMinutes()} ]
-  ======================
-  Enjoy this crap. :)
-  ======================
-  `);
-});
 
 module.exports = app;
