@@ -4,6 +4,7 @@
   "description": "Simple server with express",
   "main": "app.js",
   "scripts": {
+    "deploy": "npm run build && scp -r ./dist/* sekizo@178.154.224.36:/home/sekizo/P.W-15/news-frontend",
     "start": "node server.js",
     "test": "jest",
     "dev": "nodemon app.js",
