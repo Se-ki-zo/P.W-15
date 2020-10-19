@@ -22,6 +22,7 @@ const auth = require('./middlewares/auth');
 const app = express();
 
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
