@@ -7,6 +7,11 @@ const bodyParser = require('body-parser');
 // https://www.npmjs.com/package/cookie-parser
 const cookieParser = require('cookie-parser');
 
+const {
+  requestLogger,
+  errorLogger,
+} = require('./middlewares/logger');
+
 const auth = require('./middlewares/auth');
 
 const app = express();
@@ -32,6 +37,8 @@ app.use('', express.static(`${__dirname}/public`));
 
 app.use(cookieParser());
 
+app.use(requestLogger);
+
 app.post('/signin', login); // test
 app.post('/signup', createUser); // test
 
@@ -40,5 +47,14 @@ app.use('/', auth, users);
 app.use('/', auth, cards);
 
 app.use('/', otherReq);
+
+app.use(errorLogger); // подключаем логгер ошибок
+
+// app.use(errors()); // обработчик ошибок celebrate
+
+// централизованный обработчик ошибок
+// app.use((err, req, res, next) => {
+//   // ...
+// });
 
 module.exports = app;
