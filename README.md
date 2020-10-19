@@ -4,7 +4,7 @@ it's a simple project with some abilities to make GET/POST/DELETE req to server.
 ## Tech
 In this project, we used node.js and express.js and many libs, to create this server and try to upgrade skills.
 
-## ver 0.0.2
+## ver 0.0.1
 We added some new functional in project:
 1. added ability to create & login as user.
 

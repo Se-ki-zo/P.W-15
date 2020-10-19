@@ -1,4 +1,6 @@
 const express = require('express');
+// npm install dotenv
+require('dotenv').config();
 const mongoose = require('mongoose');
 // npm install body-parser
 // http://expressjs.com/en/resources/middleware/body-parser.html
@@ -6,7 +8,9 @@ const bodyParser = require('body-parser');
 // npm install cookie-parser
 // https://www.npmjs.com/package/cookie-parser
 const cookieParser = require('cookie-parser');
-const { errors } = require('celebrate');
+const {
+  errors,
+} = require('celebrate');
 
 const {
   requestLogger,
@@ -57,12 +61,18 @@ app.use('/', otherReq);
 
 app.use(errorLogger);
 
-app.use(errors()); // обработчик ошибок celebrate
+app.use(errors());
 
-// централизованный обработчик ошибок
-// app.use((err, req, res, next) => {
-//   // ...
-// });
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500
+        ? err.message : message,
+    });
+});
 
 const {
   PORT = 3000,
