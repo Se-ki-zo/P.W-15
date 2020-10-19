@@ -48,7 +48,7 @@ app.use('/', auth, cards);
 
 app.use('/', otherReq);
 
-app.use(errorLogger); // подключаем логгер ошибок
+app.use(errorLogger);
 
 // app.use(errors()); // обработчик ошибок celebrate
 
