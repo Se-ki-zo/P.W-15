@@ -42,7 +42,7 @@ module.exports.returnCards = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
-  Card.findById(req.params.id).orFail(new Error('NotValidId')) // test
+  Card.findById(req.params.id).orFail(new Error('NotValidId'))
     .then((card) => {
       if (req.user._id !== card.owner) {
         res.status(403).send({

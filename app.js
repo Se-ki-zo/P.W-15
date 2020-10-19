@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 // npm install cookie-parser
 // https://www.npmjs.com/package/cookie-parser
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 
 const {
   requestLogger,
@@ -30,8 +31,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 const cards = require('./routes/cards.js');
 const users = require('./routes/users.js');
 const otherReq = require('./routes/other.js');
-const login = require('./routes/users.js'); // test
-const createUser = require('./routes/users.js'); // test
+const login = require('./routes/users.js');
+const createUser = require('./routes/users.js');
 
 app.use('', express.static(`${__dirname}/public`));
 
@@ -45,8 +46,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', login); // test
-app.post('/signup', createUser); // test
+app.post('/signin', login);
+app.post('/signup', createUser);
 
 app.use('/', auth, users);
 
@@ -56,11 +57,29 @@ app.use('/', otherReq);
 
 app.use(errorLogger);
 
-// app.use(errors()); // обработчик ошибок celebrate
+app.use(errors()); // обработчик ошибок celebrate
 
 // централизованный обработчик ошибок
 // app.use((err, req, res, next) => {
 //   // ...
 // });
+
+const {
+  PORT = 3000,
+} = process.env;
+
+app.listen(PORT, () => {
+  console.log(`
+  ======================
+  Server has been started.
+  ======================
+  Current port: [ ${PORT} ].
+  ======================
+  Current time [ ${new Date().getHours()}:${new Date().getMinutes()} ]
+  ======================
+  Enjoy this crap. :)
+  ======================
+  `);
+});
 
 module.exports = app;

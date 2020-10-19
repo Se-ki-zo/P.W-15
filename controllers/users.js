@@ -34,7 +34,7 @@ module.exports.createUser = (req, res) => {
         email,
         password: hash,
       }))
-      .then((user) => res.send({ // test
+      .then((user) => res.send({
         _id: user._id,
         name: user.name,
         about: user.about,
@@ -91,7 +91,7 @@ module.exports.findUser = (req, res) => {
     });
 };
 
-module.exports.login = (req, res) => { // test
+module.exports.login = (req, res) => {
   const {
     email,
     password,
