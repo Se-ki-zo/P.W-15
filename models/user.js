@@ -1,17 +1,10 @@
-const mongoose = require('mongoose');
-
 // npm install bcryptjs
-// https://www.npmjs.com/package/bcryptjs
-const bcrypt = require('bcryptjs');
-
 // npm install url-validation
-// https://www.npmjs.com/package/url-validation
-
-const isUrlValid = require('url-validation');
-
 // npm install validator
-// https://www.npmjs.com/package/validator
 
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const isUrlValid = require('url-validation');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
@@ -57,13 +50,13 @@ userSchema.statics.findUserByCredentials = function (email, password) {
   }).select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new Error('Неправильные почта или пароль'));
+        return Promise.reject(new Error('wrongPasswordOrEmail'));
       }
 
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            return Promise.reject(new Error('Неправильные почта или пароль'));
+            return Promise.reject(new Error('wrongPasswordOrEmail'));
           }
 
           return user; // теперь user доступен

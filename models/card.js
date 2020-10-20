@@ -1,8 +1,6 @@
-const mongoose = require('mongoose');
-
 // npm install url-validation
-// https://www.npmjs.com/package/url-validation
 
+const mongoose = require('mongoose');
 const isUrlValid = require('url-validation');
 
 const cardSchema = new mongoose.Schema({

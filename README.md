@@ -4,9 +4,10 @@ it's a simple project with some abilities to make GET/POST/DELETE req to server.
 ## Tech
 In this project, we used node.js and express.js and many libs, to create this server and try to upgrade skills.
 
-## ver 0.0.1
+## ver 0.0.2
 We added some new functional in project:
-1. added ability to create & login as user.
+1. repaired auth problem.
+2. repaired bad pas problem.
 
 ## How to use?
 1. first of all u need to open a [site](http://178.154.224.36/) (or one of these [mirror1](http://sekizo.students.nomoreparties.xyz/), [mirror2](https://sekizo.students.nomoreparties.xyz/), [mirror3](http://www.sekizo.students.nomoreparties.xyz/), [mirror4](https://www.sekizo.students.nomoreparties.xyz/)) in ur browser and download all files to work with it.

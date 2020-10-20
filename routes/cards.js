@@ -10,15 +10,18 @@ const {
 
 const Cards = require('../controllers/cards.js');
 
-router.delete('/cards/:id',
+router.delete('/:id',
   celebrate({
+    params: Joi.object().keys({
+      id: Joi.string().hex(),
+    }),
     [Segments.COOKIES]: Joi.object({
       jwt: Joi.string().required(),
     }),
   }),
   Cards.deleteCard);
 
-router.get('/cards',
+router.get('/',
   celebrate({
     [Segments.COOKIES]: Joi.object({
       jwt: Joi.string().required(),
@@ -26,7 +29,7 @@ router.get('/cards',
   }),
   Cards.returnCards);
 
-router.post('/cards',
+router.post('/',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),

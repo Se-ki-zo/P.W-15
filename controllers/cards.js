@@ -1,11 +1,5 @@
 const Card = require('../models/card.js');
 
-// const BadReq = require('../errors/BadReq.js'); // 400
-// const Conflict = require('../errors/Conflict.js'); // 409
-const Forbidden = require('../errors/Forbidden.js'); // 403
-const NotFound = require('../errors/NotFound.js'); // 404
-// const Unauthorized = require('../errors/Unauthorized.js'); // 401
-
 module.exports.createCard = (req, res, next) => {
   const {
     name,
@@ -31,24 +25,25 @@ module.exports.createCard = (req, res, next) => {
 
 module.exports.returnCards = (req, res, next) => {
   Card.find(req.params)
-    .then((card) => res.send({
-      data: card,
-    }))
+    .then((card) => {
+      res.send({
+        data: card,
+      });
+    })
     .catch(next);
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findById(req.params.id).orFail(() => {
-    throw new NotFound('Нет ресурсов по заданномку ID');
-  })
+  Card.findById(req.params.id)
+    .orFail()
     .then((card) => {
-      if (req.user._id !== String(card.owner)) {
-        throw new Forbidden('Нет прав на удаление');
-      } else {
-        Card.findByIdAndRemove(req.params.id).orFail(new Error('NotValidId'))
+      if (req.user._id === String(card.owner)) {
+        Card.findByIdAndRemove(req.params.id)
           .then(() => res.send({
             data: card,
           }));
+      } else {
+        throw new Error('NotAllowed').message;
       }
     })
     .catch(next);

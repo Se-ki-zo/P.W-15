@@ -10,15 +10,18 @@ const {
 
 const User = require('../controllers/users.js');
 
-router.get('/users/:id',
+router.get('/:id',
   celebrate({
+    params: Joi.object().keys({
+      id: Joi.string().hex(),
+    }),
     [Segments.COOKIES]: Joi.object({
       jwt: Joi.string().required(),
     }),
   }),
   User.findUser);
 
-router.get('/users',
+router.get('/',
   celebrate({
     [Segments.COOKIES]: Joi.object({
       jwt: Joi.string().required(),
@@ -33,7 +36,7 @@ router.post('/signup',
       about: Joi.string().required().min(2).max(30),
       avatar: Joi.string().required().uri(),
       email: Joi.string().required().email(),
-      password: Joi.string().required().min(8),
+      password: Joi.string().required().min(8).pattern(/^\S*$/),
     }),
   }),
   User.createUser);
