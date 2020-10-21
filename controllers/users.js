@@ -53,7 +53,9 @@ module.exports.findUser = (req, res, next) => {
   User.findById(req.params.id)
     .orFail()
     .then((user) => {
-      console.log(req.params);
+      // if (!User.findById(req.params.id)) {
+      //   throw new Error('NotFound').message;
+      // }
       res.send({
         data: user,
       });

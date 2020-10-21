@@ -2,7 +2,7 @@
 module.exports.errCatcher = (err, req, res, next) => {
   console.log(err); // test
 
-  if (err.message === 'NotFound') { // 404
+  if (err.message === 'NotFound' || err.name === 'DocumentNotFoundError') { // 404
     return res.status(404).send({
       message: 'Запрашиваемый ресурс не найден',
     });
@@ -17,7 +17,7 @@ module.exports.errCatcher = (err, req, res, next) => {
       message: 'Нет прав на удаление',
     });
   }
-  if (err.name === 'CastError' || err.name === 'DocumentNotFoundError') { // 400
+  if (err.name === 'CastError') { // 400
     return res.status(400).send({
       message: 'Нет ресурсов по заданному ID',
     });
