@@ -1,26 +1,22 @@
-const express = require('express');
+// npm install body-parser
+// npm install cookie-parser
 // npm install dotenv
+
+const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
-// npm install body-parser
-// http://expressjs.com/en/resources/middleware/body-parser.html
 const bodyParser = require('body-parser');
-// npm install cookie-parser
-// https://www.npmjs.com/package/cookie-parser
 const cookieParser = require('cookie-parser');
 const {
   errors,
 } = require('celebrate');
-
 const {
   requestLogger,
   errorLogger,
 } = require('./middlewares/logger');
-
 const auth = require('./middlewares/auth');
 
 const app = express();
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -38,10 +34,7 @@ const otherReq = require('./routes/other.js');
 const login = require('./routes/users.js');
 const createUser = require('./routes/users.js');
 
-app.use('', express.static(`${__dirname}/public`));
-
 app.use(cookieParser());
-
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
@@ -53,26 +46,14 @@ app.get('/crash-test', () => {
 app.post('/signin', login);
 app.post('/signup', createUser);
 
-app.use('/', auth, users);
-
-app.use('/', auth, cards);
-
+app.use('/users', auth, users); // test
+app.use('/cards', auth, cards); // test
 app.use('/', otherReq);
 
 app.use(errorLogger);
-
 app.use(errors());
 
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? err.message : message,
-    });
-});
+app.use(require('./errors/errCatcher').errCatcher); // Централизованная обработка ошибок
 
 const {
   PORT = 3000,

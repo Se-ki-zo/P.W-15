@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "express-winston": "^4.0.5",
     "joi": "^17.2.1",
+    "joi-objectid": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7",
     "url-validation": "^2.1.0",
